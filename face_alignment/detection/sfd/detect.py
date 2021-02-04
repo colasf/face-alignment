@@ -34,6 +34,8 @@ def batch_detect(net, img_batch, device):
 
     with torch.no_grad():
         olist = net(img_batch)  # patched uint8_t overflow error
+        mod = torch.jit.trace(net, img_batch)
+        mod.save('s3df.pt')
 
     for i in range(len(olist) // 2):
         olist[i * 2] = F.softmax(olist[i * 2], dim=1)
