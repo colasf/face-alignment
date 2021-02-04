@@ -22,7 +22,7 @@ def batch_detect(net, img_batch, device):
     Inputs:
         - img_batch: a torch.Tensor of shape (Batch size, Channels, Height, Width)
     """
-
+    print("----------- hello -------")
     if 'cuda' in device:
         torch.backends.cudnn.benchmark = True
 
