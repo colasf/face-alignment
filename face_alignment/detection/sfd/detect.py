@@ -30,10 +30,17 @@ def batch_detect(net, img_batch, device):
     img_batch = img_batch.to(device, dtype=torch.float32)
 
     img_batch = img_batch.flip(-3)  # RGB to BGR
+
+    print("dimension : ", img_batch.dim())
     img_batch = img_batch - torch.tensor([104.0, 117.0, 123.0], device=device).view(1, 3, 1, 1)
+    print("dimension : ", img_batch.dim())
+
+    
 
     with torch.no_grad():
-        olist = net(img_batch)  # patched uint8_t overflow error
+        olist = list(net(img_batch))  # patched uint8_t overflow error
+
+        # colas modification trace the model
         mod = torch.jit.trace(net, img_batch)
         mod.save('s3df.pt')
 

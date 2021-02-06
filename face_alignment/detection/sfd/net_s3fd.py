@@ -126,4 +126,7 @@ class s3fd(nn.Module):
         bmax = torch.max(torch.max(chunk[0], chunk[1]), chunk[2])
         cls1 = torch.cat([bmax, chunk[3]], dim=1)
 
+        # colas modification 
+        # return [cls1, reg1, cls2, reg2, cls3, reg3, cls4, reg4, cls5, reg5, cls6, reg6]
+        # use a tuple in place of list to avoid error when tracing the model
         return (cls1, reg1, cls2, reg2, cls3, reg3, cls4, reg4, cls5, reg5, cls6, reg6)
