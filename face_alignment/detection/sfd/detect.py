@@ -31,9 +31,9 @@ def batch_detect(net, img_batch, device):
 
     img_batch = img_batch.flip(-3)  # RGB to BGR
 
-    print("dimension : ", img_batch.dim())
+    print("dimension : ", img_batch.size())
     img_batch = img_batch - torch.tensor([104.0, 117.0, 123.0], device=device).view(1, 3, 1, 1)
-    print("dimension : ", img_batch.dim())
+    print("dimension : ", img_batch.size())
 
     
 
