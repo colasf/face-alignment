@@ -22,7 +22,6 @@ def batch_detect(net, img_batch, device):
     Inputs:
         - img_batch: a torch.Tensor of shape (Batch size, Channels, Height, Width)
     """
-    print("----------- hello -------")
     if 'cuda' in device:
         torch.backends.cudnn.benchmark = True
 
@@ -38,11 +37,11 @@ def batch_detect(net, img_batch, device):
     
 
     with torch.no_grad():
-        olist = list(net(img_batch))  # patched uint8_t overflow error
-
-        # colas modification trace the model
+        # colas modification trace the model and use it
         mod = torch.jit.trace(net, img_batch)
         mod.save('s3df.pt')
+        olist = list(mod(img_batch))  # patched uint8_t overflow error
+
 
     for i in range(len(olist) // 2):
         olist[i * 2] = F.softmax(olist[i * 2], dim=1)
